@@ -7,6 +7,6 @@ if __name__ == '__main__':
     print "start appliaction"
     app = wx.App(False)
     main_frame = MainFrame(None,"map editor")
-    main_frame.Show()
+    main_frame.Show(True)
     app.MainLoop()
     pass

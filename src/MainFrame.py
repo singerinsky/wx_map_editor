@@ -15,6 +15,8 @@ ID_MENU_ADD_MAP= 2002
 ID_SOURCE_GRID      = 3001
 
 ID_MAP_WIDTH = 4001
+ID_MAP_HEIGHT= 4002
+ID_MAP_GEN_BTU = 4003
 
 
 class MainFrame(wx.Frame):
@@ -23,6 +25,7 @@ class MainFrame(wx.Frame):
         wx.Frame.__init__(self,parent,title=title,size=(500,600))
         self.init_menu_bar()
         
+        self.map_panel = wx.Panel(self)        
         self.Show(True)
         
     def init_menu_bar(self):
@@ -81,18 +84,28 @@ class MainFrame(wx.Frame):
         #self.map_grid_.Show(False)
         
     def open_new_map(self):
-        panel = wx.Panel(self,-1)        
-        self.col_txt = wx.TextCtrl(panel,ID_MAP_WIDTH,"rows",size=(175,-1))
-        #self.MoveXY(50,50)
-        #self.col_txt.Show()
-        self.col_txt.SetInsertionPoint(0)
+        self.col_txt1 = wx.TextCtrl(self.map_panel,ID_MAP_WIDTH,pos=(60,20),size=(50,-1))
+        self.col_txt2 = wx.TextCtrl(self.map_panel,ID_MAP_HEIGHT,pos=(170,20),size=(50,-1))
+        self.show_txt1 = wx.StaticText(self.map_panel,-1,"rows:")
+        self.show_txt2 = wx.StaticText(self.map_panel,-1,"cols:")
+        self.show_txt1.MoveXY(15,20)
+        self.show_txt2.MoveXY(120,20)
+        #self.col_txt1.MoveXY(50,50)
+        self.col_txt1.SetInsertionPoint(0)
+        self.col_txt2.SetInsertionPoint(0)
+
+        self.generate_gird_btn = wx.Button(self.map_panel,ID_MAP_GEN_BTU,pos=(20,60),size=(80,30),label="generate") 
+        self.Bind(wx.EVT_BUTTON,self.open_map_draw,self.generate_gird_btn)
+
+
         sizer=wx.FlexGridSizer(cols=2,hgap=6,vgap=6)
-        sizer.AddMany([self.col_txt])
-        panel.SetSizer(sizer)
-        #self.col_txt.Show()
+        sizer.AddMany([self.col_txt1,self.col_txt2])
+        self.map_panel.SetSizer(sizer)
+        #self.col_txt1.Show()
         #/self.Bind(wx.EVT_TEXT,,self.col_txt)
 
-
-
+    def open_map_draw(self,button):
+        print u"open map draw",self.col_txt1.GetValue(),self.col_txt2.GetValue()
+         
 
 
